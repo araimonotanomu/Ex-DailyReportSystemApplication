@@ -9,11 +9,11 @@ import java.util.regex.Pattern;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.techacademy.constants.ErrorKinds;
 import com.techacademy.entity.Employee;
 import com.techacademy.repository.EmployeeRepository;
-import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class EmployeeService {
@@ -81,7 +81,7 @@ public class EmployeeService {
         Employee employee = option.orElse(null);
         return employee;
     }
-
+    
     // 従業員パスワードチェック
     private ErrorKinds employeePasswordCheck(Employee employee) {
 
