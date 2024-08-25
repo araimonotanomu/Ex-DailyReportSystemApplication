@@ -98,34 +98,32 @@ public class EmployeeController {
     }
     
  // 従業員更新画面
-    @GetMapping(value = "{code}/update")
+    @GetMapping(value="{code}/update")
     public String edit(@PathVariable("code") String code, Model model) {
-        if (code != null) {
-            model.addAttribute("employee", employeeService.findByCode(code));      }
+        
+            model.addAttribute("employee", employeeService.findByCode(code));    
 
         return "emoloyees/update";
     }
     
     // 従業員更新処理
     @PostMapping("/{code}/update")
-    public String update(@Validated Employee employee, BindingResult res, Model model) {
-        // パスワードの入力があった場合
-        if (!("".equals(employee.getPassword()))) {
-            // 入力項目にエラーあり
-            if (res.hasErrors()) {
-                return edit(employee);
-       
-         // 従業員登録
-            } else {
-            employeeService.save(employee);
-            
+    public String update(@Validated Employee employee, BindingResult res, String code, Model model) {
+        
+     // 入力チェック
+        if (res.hasErrors()) {
+            return edit(code, model);
+        }
+        
+        ErrorKinds result = employeeService.update(code, employee);
+
+        if (ErrorMessage.contains(result)) {
+            model.addAttribute(ErrorMessage.getErrorName(result), ErrorMessage.getErrorValue(result));
+            return edit(code, model);
+        }
+        
             return "redirect:/employees";
             
-            }
-         // 入力がない場合
-        } else {
-            
-        }
     }
 
     // 従業員削除処理

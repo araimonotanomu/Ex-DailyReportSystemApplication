@@ -51,6 +51,32 @@ public class EmployeeService {
         employeeRepository.save(employee);
         return ErrorKinds.SUCCESS;
     }
+    
+    // 従業員更新
+    @Transactional
+    public ErrorKinds update(String code, Employee employee) {
+        
+        // パスワードの入力がない場合
+        if ("".equals(employee.getPassword())) {
+            
+            
+        // 入力がある場合
+        } else {
+        
+        ErrorKinds result = employeePasswordCheck(employee);
+        if (ErrorKinds.CHECK_OK != result) {
+        return result;
+        }
+        
+        }
+        
+        LocalDateTime now = LocalDateTime.now();
+        employee.setUpdatedAt(now);
+        
+        employeeRepository.save(employee);
+        return ErrorKinds.SUCCESS;
+        
+    }
 
     // 従業員削除
     @Transactional
