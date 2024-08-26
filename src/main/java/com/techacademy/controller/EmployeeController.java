@@ -103,7 +103,7 @@ public class EmployeeController {
         
             model.addAttribute("employee", employeeService.findByCode(code));    
 
-        return "emoloyees/update";
+        return "employees/update";
     }
     
     // 従業員更新処理
@@ -115,7 +115,7 @@ public class EmployeeController {
             return edit(code, model);
         }
         
-        ErrorKinds result = employeeService.update(code, employee);
+        ErrorKinds result = employeeService.update(employee);
 
         if (ErrorMessage.contains(result)) {
             model.addAttribute(ErrorMessage.getErrorName(result), ErrorMessage.getErrorValue(result));
