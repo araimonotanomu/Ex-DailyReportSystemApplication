@@ -54,20 +54,21 @@ public class EmployeeService {
     
     // 従業員更新
     @Transactional
-    public ErrorKinds update(String code, Employee employee) {
+    public ErrorKinds update(Employee employee, String code) {
         
-        // パスワードの入力がない場合
+     // パスワードの入力がない場合
         if ("".equals(employee.getPassword())) {
             
+            employee.setPassword(code);
             
         // 入力がある場合
         } else {
         
-        ErrorKinds result = employeePasswordCheck(employee);
-        if (ErrorKinds.CHECK_OK != result) {
-        return result;
-        }
-        
+            ErrorKinds result = employeePasswordCheck(employee);
+            if (ErrorKinds.CHECK_OK != result) {
+            return result;
+            }
+            
         }
         
         LocalDateTime now = LocalDateTime.now();
