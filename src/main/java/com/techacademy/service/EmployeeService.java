@@ -59,7 +59,8 @@ public class EmployeeService {
      // パスワードの入力がない場合
         if ("".equals(employee.getPassword())) {
             
-            employee.setPassword(code);
+            Employee beforeEmployee = findByCode(code);
+            employee.setPassword(beforeEmployee.getPassword());
             
         // 入力がある場合
         } else {
@@ -72,6 +73,8 @@ public class EmployeeService {
         }
         
         LocalDateTime now = LocalDateTime.now();
+        Employee beforeEmployee = findByCode(code);
+        employee.setCreatedAt(beforeEmployee.getCreatedAt());
         employee.setUpdatedAt(now);
         
         employeeRepository.save(employee);
